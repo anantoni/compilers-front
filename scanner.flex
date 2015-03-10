@@ -72,14 +72,14 @@ dec_int_lit = 0 | [1-9][0-9]*
  "*"      { return symbol(sym.TIMES); }
  "("      { return symbol(sym.LPAREN); }
  ")"      { return symbol(sym.RPAREN); }
- ";"      {return symbol(sym.SEMI); }
- "-"      { return symbol(sym.UMINUS); }
+ ";"      { return symbol(sym.SEMI); }
+}
 
 
 {dec_int_lit} { return symbol(sym.NUMBER, new Integer(yytext())); }
 
 {WhiteSpace} { /* just skip what was found, do nothing */ }
-}
+
 /* No token was found for the input so through an error.  Print out an
    Illegal character message with the illegal character that was found. */
 [^]                    { throw new Error("Illegal character <"+yytext()+">"); }
