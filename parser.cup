@@ -1,6 +1,12 @@
 /* Simple +/-/* expression language; parser evaluates constant expressions on the fly*/
+/**
+ *  Package and Import Specifications
+ */
 import java_cup.runtime.*;
 
+/**
+ *  Usercode Components
+ */
 parser code {:
     // Connect this parser to a scanner!
     Scanner s;
@@ -11,20 +17,28 @@ parser code {:
 //init with {: s.init(); :};
 scan with {: return s.next_token(); :};
 
+/**
+ *  Symbol Lists
+ */
+
 /* Terminals (tokens returned by the scanner). */
 terminal            SEMI, PLUS, MINUS, TIMES, UMINUS, LPAREN, RPAREN;
 terminal Integer    NUMBER;        // our scanner provides numbers as integers
 
-/* Non terminals */
+/*  Non terminals */
 non terminal            expr_list;
 non terminal Integer    expr;      // used to store evaluated subexpressions
 
-/* Precedences */
+/**
+ *  Precedence Declarations
+ */
 precedence left PLUS, MINUS;
 precedence left TIMES;
 precedence left UMINUS;
 
-/* The grammar rules */
+/**
+ *  The Grammar Rules
+ */
 expr_list ::= expr_list expr:e SEMI         {: System.out.println(e);:}
             | expr:e SEMI                   {: System.out.println(e);:}
 ;
@@ -33,6 +47,6 @@ expr      ::= expr:e1 PLUS  expr:e2         {: RESULT = e1+e2;       :}
              | expr:e1 TIMES expr:e2        {: RESULT = e1*e2;       :}
              | MINUS expr:e                 {: RESULT = -e;          :}
   	         %prec UMINUS
-             | LPAREN expr:e RPAREN	         {: RESULT = e;           :}
-             | NUMBER:n	                     {: RESULT = n;           :}
+             | LPAREN expr:e RPAREN	        {: RESULT = e;           :}
+             | NUMBER:n	                    {: RESULT = n;           :}
              ;
