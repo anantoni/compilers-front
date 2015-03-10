@@ -1,7 +1,14 @@
-jflex scanner.flex
+Yliko frontisthriou 10/03/2015
 
-java -jar java-cup-11b.jar -parser Parser parser.cup
+dir structure:
+grammar_example: LL(1) grammar for ternary operators,
+simple parser,
+simple evaluator
+tree generator
 
-javac -cp java-cup-11b-runtime.jar *.java
 
-java -cp java-cup-11b-runtime.jar:. Parser
+jflex-cup: jflex specification for a simple calculator grammar
+java cup specification for the same simple calculator grammar
+Makefile (check level-2 README.md for compilation and execution instructions)
+
+
