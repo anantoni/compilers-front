@@ -33,13 +33,13 @@ import java_cup.runtime.*;
 */
 
 %{
-    StringBuffer stringBuffer = new StringBuffer();
-    private Symbol symbol(int type) {
-       return new Symbol(type, yyline, yycolumn);
-    }
-    private Symbol symbol(int type, Object value) {
-        return new Symbol(type, yyline, yycolumn, value);
-    }
+StringBuffer stringBuffer = new StringBuffer();
+private Symbol symbol(int type) {
+   return new Symbol(type, yyline, yycolumn);
+}
+private Symbol symbol(int type, Object value) {
+    return new Symbol(type, yyline, yycolumn, value);
+}
 %}
 
 /*
@@ -64,19 +64,19 @@ WhiteSpace     = {LineTerminator} | [ \t\f]
 
 <YYINITIAL> {
 /* operators */
- "+"      { return symbol(sym.PLUS); }
- "-"      { return symbol(sym.MINUS); }
- "*"      { return symbol(sym.TIMES); }
- "("      { return symbol(sym.LPAREN); }
- ")"      { return symbol(sym.RPAREN); }
- ";"      { return symbol(sym.SEMI); }
- \"       { stringBuffer.setLength(0); yybegin(STRING); }
+ "+"            { return symbol(sym.PLUS); }
+ "-"            { return symbol(sym.MINUS); }
+ "*"            { return symbol(sym.TIMES); }
+ "("            { return symbol(sym.LPAREN); }
+ ")"            { return symbol(sym.RPAREN); }
+ ";"            { return symbol(sym.SEMI); }
+ \"             { stringBuffer.setLength(0); yybegin(STRING); }
+ {WhiteSpace}   { /* just skip what was found, do nothing */ }
 }
 
 <STRING> {
       \"                             { yybegin(YYINITIAL);
-                                       return symbol(sym.STRING_LITERAL,
-                                       stringBuffer.toString()); }
+                                       return symbol(sym.STRING_LITERAL, stringBuffer.toString()); }
       [^\n\r\"\\]+                   { stringBuffer.append( yytext() ); }
       \\t                            { stringBuffer.append('\t'); }
       \\n                            { stringBuffer.append('\n'); }
@@ -85,8 +85,6 @@ WhiteSpace     = {LineTerminator} | [ \t\f]
       \\\"                           { stringBuffer.append('\"'); }
       \\                             { stringBuffer.append('\\'); }
 }
-
-{WhiteSpace} { /* just skip what was found, do nothing */ }
 
 /* No token was found for the input so through an error.  Print out an
    Illegal character message with the illegal character that was found. */

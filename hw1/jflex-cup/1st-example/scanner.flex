@@ -1,12 +1,11 @@
-/* JFlex example: part of Java language lexer specification */
 import java_cup.runtime.*;
-/**
+
 %%
-/* -----------------Options and Declarations Section----------------- */
+/* ----------------- Options and Declarations Section----------------- */
 
 /*
-   The name of the class JFlex will create will be Lexer.
-   Will write the code to the file Lexer.java.
+   The name of the class JFlex will create will be Scanner.
+   Will write the code to the file Scanner.java.
 */
 %class Scanner
 
@@ -22,6 +21,7 @@ import java_cup.runtime.*;
    generated parser.
 */
 %cup
+%unicode
 
 /*
   Declarations
@@ -33,7 +33,9 @@ import java_cup.runtime.*;
 */
 
 %{
-    StringBuffer string = new StringBuffer();
+    /**
+        The following two methods create java_cup.runtime.Symbol objects
+    **/
     private Symbol symbol(int type) {
        return new Symbol(type, yyline, yycolumn);
     }
@@ -48,7 +50,6 @@ import java_cup.runtime.*;
   These declarations are regular expressions that will be used latter
   in the Lexical Rules Section.
 */
-
 
 /* A line terminator is a \r (carriage return), \n (line feed), or
    \r\n. */
